@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>✦ SEU TÍTULO AQUI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       VARIÁVEIS — edite as cores aqui
+    ============================================================ */
+    :root {
+      --cor-primaria:   #B8FF5A;   /* verde lima — cor de destaque */
+      --cor-secundaria: #FF6BCC;   /* rosa — segundo destaque      */
+      --cor-fundo:      #0D0D0D;   /* fundo escuro das seções      */
+      --cor-texto:      #F5F5F5;   /* cor do texto principal       */
+      --cor-suave:      rgba(255,255,255,0.45); /* textos secundários */
+      --raio:           16px;      /* arredondamento dos cards     */
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cor-fundo);
+      color: var(--cor-texto);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ============================================================
+       NAVEGAÇÃO
+    ============================================================ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 5%;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(13,13,13,0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    /* ── LOGO: edite o texto abaixo ── */
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      color: var(--cor-primaria);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+    /* ── LINKS DO MENU ── */
+    .nav-links a {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--cor-suave);
+      transition: color 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .nav-links a:hover { color: var(--cor-texto); }
+
+    /* ── BOTÃO DO MENU (CTA) ── */
+    .nav-btn {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.55rem 1.4rem;
+      background: var(--cor-primaria);
+      color: #000;
+      border-radius: 100px;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .nav-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ============================================================
+       HERO — SEÇÃO COM VÍDEO
+    ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* ── VÍDEO DE FUNDO ──
+         Coloque o caminho do seu vídeo no atributo src abaixo.
+         Formatos recomendados: .mp4 (H.264) para compatibilidade máxima.
+         Dica: adicione também um <source type="video/webm"> como fallback.
+    ── */
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.30;            /* 0 = invisível · 1 = totalmente visível */
+      filter: saturate(0.6);    /* remova esta linha para manter as cores */
+    }
+
+    /* Overlay gradiente sobre o vídeo */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom,
+          rgba(13,13,13,0.15) 0%,
+          rgba(13,13,13,0.05) 45%,
+          rgba(13,13,13,0.80) 100%);
+    }
+
+    /* Conteúdo do hero */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+      padding: 0 5%;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    /* ── TAG ACIMA DO TÍTULO ── */
+    .hero-tag {
+      display: inline-block;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cor-primaria);
+      background: rgba(184,255,90,0.1);
+      border: 1px solid rgba(184,255,90,0.25);
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.6rem;
+      animation: fadeUp 0.9s 0.1s ease both;
+    }
+
+    /* ── TÍTULO PRINCIPAL ── */
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.4rem;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+    /* Palavra em destaque dentro do título */
+    .hero-title .destaque { color: var(--cor-primaria); }
+
+    /* ── SUBTÍTULO / DESCRIÇÃO ── */
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--cor-suave);
+      max-width: 540px;
+      margin: 0 auto 2.4rem;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+
+    /* ── BOTÕES DO HERO ── */
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.9s 0.4s ease both;
+    }
+    .btn-primary {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.85rem 2.2rem;
+      background: var(--cor-primaria);
+      color: #000;
+      border-radius: 100px;
+      transition: transform 0.15s, opacity 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); opacity: 0.88; }
+    .btn-ghost {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.85rem 2.2rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      color: var(--cor-texto);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+
+    /* Indicador de scroll */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cor-suave);
+      animation: bounce 2s infinite;
+    }
+    .scroll-hint svg { opacity: 0.5; }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ============================================================
+       SEÇÃO GENÉRICA
+    ============================================================ */
+    section { padding: 6rem 5%; }
+
+    .section-label {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cor-primaria);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--cor-suave);
+      max-width: 520px;
+      line-height: 1.75;
+    }
+
+    /* ============================================================
+       SEÇÃO SOBRE / TEXTO + IMAGEM
+    ============================================================ */
+    #sobre { background: #111116; }
+
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── IMAGEM DO SOBRE: troque o src ── */
+    .sobre-img {
+      border-radius: var(--raio);
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      opacity: 0.85;
+    }
+
+    /* Parágrafo do sobre */
+    .sobre-texto p {
+      color: var(--cor-suave);
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+    .sobre-texto p:last-child { margin-bottom: 0; }
+
+    /* ============================================================
+       SEÇÃO CARDS (features / tópicos)
+    ============================================================ */
+    #cards { background: var(--cor-fundo); }
+
+    .cards-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 3.5rem;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #16161C;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--raio);
+      padding: 2rem;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(184,255,90,0.3);
+    }
+
+    /* ── ÍCONE DO CARD: troque o emoji ou SVG ── */
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1.1rem;
+      display: block;
+    }
+    /* ── TÍTULO DO CARD ── */
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.08rem;
+      margin-bottom: 0.6rem;
+    }
+    /* ── TEXTO DO CARD ── */
+    .card-text {
+      font-size: 0.9rem;
+      color: var(--cor-suave);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       SEÇÃO DEPOIMENTOS / CITAÇÕES
+    ============================================================ */
+    #depoimentos {
+      background: #111116;
+      text-align: center;
+    }
+    .dep-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 3.5rem auto 0;
+    }
+    .dep-card {
+      background: #16161C;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--raio);
+      padding: 2rem;
+      text-align: left;
+    }
+    /* ── CITAÇÃO ── */
+    .dep-quote {
+      font-size: 1rem;
+      color: var(--cor-texto);
+      font-style: italic;
+      line-height: 1.75;
+      margin-bottom: 1.4rem;
+    }
+    .dep-quote::before { content: '"'; color: var(--cor-primaria); font-size: 1.4rem; }
+    .dep-quote::after  { content: '"'; color: var(--cor-primaria); font-size: 1.4rem; }
+    /* ── NOME / CARGO ── */
+    .dep-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .dep-role { font-size: 0.8rem; color: var(--cor-suave); margin-top: 0.2rem; }
+
+    /* ============================================================
+       SEÇÃO CTA FINAL
+    ============================================================ */
+    #cta {
+      background: var(--cor-fundo);
+      text-align: center;
+    }
+    .cta-box {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .cta-box .section-title { margin-bottom: 1rem; }
+    .cta-box .section-desc  { margin: 0 auto 2.4rem; }
+
+    /* ============================================================
+       RODAPÉ
+    ============================================================ */
+    footer {
+      background: #080808;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    /* ── TEXTO DO RODAPÉ ── */
+    .footer-copy {
+      font-size: 0.82rem;
+      color: var(--cor-suave);
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--cor-suave);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cor-texto); }
+
+    /* ============================================================
+       ANIMAÇÕES DE ENTRADA AO SCROLL
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       RESPONSIVO MOBILE
+    ============================================================ */
+    @media (max-width: 768px) {
+      .nav-links, .nav-btn { display: none; }
+
+      .sobre-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════
+       NAVEGAÇÃO
+       Edite: logo, links do menu, texto do botão
+  ══════════════════════════════════════════════════════════ -->
+  <nav>
+    <span class="nav-logo">✦ Logo Aqui</span>  <!-- EDITE: nome/logo -->
+
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>       <!-- EDITE: link 1 -->
+      <li><a href="#cards">Tópicos</a></li>     <!-- EDITE: link 2 -->
+      <li><a href="#depoimentos">Vozes</a></li> <!-- EDITE: link 3 -->
+      <li><a href="#cta">Contato</a></li>       <!-- EDITE: link 4 -->
+    </ul>
+
+    <a href="#cta" class="nav-btn">Participar</a> <!-- EDITE: CTA do menu -->
+  </nav>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       HERO — VÍDEO DE FUNDO
+       ► Coloque o caminho do seu vídeo em src=""
+       ► Recomendado: .mp4 / H.264 para todos os navegadores
+  ══════════════════════════════════════════════════════════ -->
+  <section class="hero">
+
+    <!-- ▼ VÍDEO: troque "SEU_VIDEO.mp4" pelo arquivo real ▼ -->
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="genz.mp4" type="video/mp4" />
+      <!-- fallback opcional: <source src="SEU_VIDEO.webm" type="video/webm" /> -->
+    </video>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <!-- ── TAG acima do título ── -->
+      <span class="hero-tag">✦ Escreva uma tag curta aqui</span>
+
+      <!-- ── TÍTULO PRINCIPAL ── -->
+      <h1 class="hero-title">
+        Seu título <span class="destaque">impactante</span><br>vai aqui
+      </h1>
+
+      <!-- ── SUBTÍTULO / DESCRIÇÃO ── -->
+      <p class="hero-desc">
+        Escreva aqui uma descrição curta e chamativa do seu site, projeto ou comunidade. Duas ou três linhas são suficientes.
+      </p>
+
+      <!-- ── BOTÕES ── -->
+      <div class="hero-btns">
+        <a href="#sobre" class="btn-primary">Explorar ↓</a>       <!-- EDITE -->
+        <a href="#cta"   class="btn-ghost">Saiba mais</a>         <!-- EDITE -->
+      </div>
+    </div>
+
+    <!-- Indicador de scroll -->
+    <div class="scroll-hint">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      <span>Role</span>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SOBRE — texto + imagem
+  ══════════════════════════════════════════════════════════ -->
+  <section id="sobre">
+    <div class="sobre-grid">
+
+      <!-- ── IMAGEM: troque o src ── -->
+      <img
+        class="sobre-img reveal"
+        src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80"
+        alt="Descrição da imagem"
+      />
+      <!-- ↑ Troque a URL acima por uma imagem local ou da sua escolha -->
+
+      <div class="sobre-texto reveal">
+        <p class="section-label">Sobre</p>  <!-- EDITE: rótulo da seção -->
+        <h2 class="section-title">Escreva o<br>título da seção</h2>
+
+        <!-- ── PARÁGRAFOS DE TEXTO ── -->
+        <p>
+          Escreva aqui o primeiro parágrafo desta seção. Conte a história, o propósito ou o contexto do seu projeto de forma autêntica e direta.
+        </p>
+        <p>
+          Este é o segundo parágrafo. Você pode adicionar ou remover blocos &lt;p&gt; conforme precisar. Mantenha o texto conciso e relevante.
+        </p>
+        <p>
+          Terceiro parágrafo opcional. Use para complementar ou reforçar a mensagem principal.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       CARDS — tópicos / features / pilares
+       Adicione ou remova <div class="card"> conforme precisar
+  ══════════════════════════════════════════════════════════ -->
+  <section id="cards">
+    <div class="cards-header reveal">
+      <p class="section-label">Tópicos</p>  <!-- EDITE -->
+      <h2 class="section-title">O que você encontra aqui</h2>  <!-- EDITE -->
+      <p class="section-desc">Descrição opcional desta seção em uma ou duas linhas.</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- CARD 1 -->
+      <div class="card reveal">
+        <span class="card-icon">⚡</span>                   <!-- EDITE: emoji ou ícone -->
+        <h3 class="card-title">Título do card 1</h3>        <!-- EDITE -->
+        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p> <!-- EDITE -->
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="card reveal">
+        <span class="card-icon">🎯</span>
+        <h3 class="card-title">Título do card 2</h3>
+        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="card reveal">
+        <span class="card-icon">🌐</span>
+        <h3 class="card-title">Título do card 3</h3>
+        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="card reveal">
+        <span class="card-icon">💬</span>
+        <h3 class="card-title">Título do card 4</h3>
+        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
+      </div>
+
+      <!-- CARD 5 -->
+      <div class="card reveal">
+        <span class="card-icon">🔥</span>
+        <h3 class="card-title">Título do card 5</h3>
+        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
+      </div>
+
+      <!-- CARD 6 -->
+      <div class="card reveal">
+        <span class="card-icon">✨</span>
+        <h3 class="card-title">Título do card 6</h3>
+        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       DEPOIMENTOS / CITAÇÕES
+       Adicione ou remova <div class="dep-card"> conforme precisar
+  ══════════════════════════════════════════════════════════ -->
+  <section id="depoimentos">
+    <p class="section-label reveal">Vozes</p>      <!-- EDITE: rótulo -->
+    <h2 class="section-title reveal">O que estão dizendo</h2> <!-- EDITE -->
+
+    <div class="dep-grid">
+
+      <!-- DEPOIMENTO 1 -->
+      <div class="dep-card reveal">
+        <p class="dep-quote">Escreva aqui a citação ou depoimento da pessoa. Mantenha curto e impactante.</p>
+        <p class="dep-name">Nome da Pessoa</p>       <!-- EDITE -->
+        <p class="dep-role">Cargo / Descrição</p>   <!-- EDITE -->
+      </div>
+
+      <!-- DEPOIMENTO 2 -->
+      <div class="dep-card reveal">
+        <p class="dep-quote">Segunda citação ou depoimento aqui. Pode ser de outro colaborador, usuário ou parceiro.</p>
+        <p class="dep-name">Nome da Pessoa</p>
+        <p class="dep-role">Cargo / Descrição</p>
+      </div>
+
+      <!-- DEPOIMENTO 3 -->
+      <div class="dep-card reveal">
+        <p class="dep-quote">Terceira citação aqui. Autenticidade é o que conecta — use palavras reais de pessoas reais.</p>
+        <p class="dep-name">Nome da Pessoa</p>
+        <p class="dep-role">Cargo / Descrição</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       CTA FINAL — chamada para ação
+  ══════════════════════════════════════════════════════════ -->
+  <section id="cta">
+    <div class="cta-box">
+      <p class="section-label reveal">Próximo passo</p>   <!-- EDITE -->
+      <h2 class="section-title reveal">Pronto para<br><span style="color:var(--cor-primaria)">começar?</span></h2> <!-- EDITE -->
+      <p class="section-desc reveal">Escreva aqui uma última frase motivacional ou o próximo passo que você quer que o usuário tome.</p>
+
+      <div class="hero-btns reveal">
+        <a href="mailto:seuemail@email.com" class="btn-primary">Entrar em contato</a> <!-- EDITE: href com seu e-mail ou link -->
+        <a href="#sobre" class="btn-ghost">Voltar ao topo ↑</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       RODAPÉ
+  ══════════════════════════════════════════════════════════ -->
+  <footer>
+    <p class="footer-copy">© 2025 · Nome do Projeto · Feito com 💚</p> <!-- EDITE -->
+
+    <ul class="footer-links">
+      <li><a href="#">Instagram</a></li>   <!-- EDITE: links das redes -->
+      <li><a href="#">TikTok</a></li>
+      <li><a href="#">Discord</a></li>
+      <li><a href="#">Privacidade</a></li>
+    </ul>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       JAVASCRIPT — scroll reveal (não precisa editar)
+  ══════════════════════════════════════════════════════════ -->
+  <script>
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
