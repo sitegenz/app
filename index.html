@@ -6,18 +6,19 @@
   <title>✦ SEU TÍTULO AQUI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <style>
     /* ============================================================
-       VARIÁVEIS — edite as cores aqui
+       VARIÁVEIS
     ============================================================ */
     :root {
-      --cor-primaria:   #B8FF5A;   /* verde lima — cor de destaque */
-      --cor-secundaria: #FF6BCC;   /* rosa — segundo destaque      */
-      --cor-fundo:      #0D0D0D;   /* fundo escuro das seções      */
-      --cor-texto:      #F5F5F5;   /* cor do texto principal       */
-      --cor-suave:      rgba(255,255,255,0.45); /* textos secundários */
-      --raio:           16px;      /* arredondamento dos cards     */
+      --cor-primaria:   #B8FF5A;
+      --cor-secundaria: #FF6BCC;
+      --cor-fundo:      #0D0D0D;
+      --cor-texto:      #F5F5F5;
+      --cor-suave:      rgba(255,255,255,0.45);
+      --raio:           16px;
+      --nav-height:     70px;
     }
 
     /* ============================================================
@@ -42,24 +43,23 @@
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
       display: flex;
+      z-index: 100;
       justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 5%;
+      padding: 0 5%;
+      height: var(--nav-height);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       background: rgba(13,13,13,0.55);
       border-bottom: 1px solid rgba(255,255,255,0.07);
     }
 
-    /* ── LOGO: edite o texto abaixo ── */
-    .nav-logo {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 900;
-      font-size: 1.35rem;
-      letter-spacing: -0.02em;
-      color: var(--cor-primaria);
+    .nav-logo img {
+      margin-top:15px;
+      margin-left:-10px;
+      height: 150px;
+      width: 250px;
     }
 
     .nav-links {
@@ -67,7 +67,6 @@
       gap: 2.2rem;
       list-style: none;
     }
-    /* ── LINKS DO MENU ── */
     .nav-links a {
       font-family: 'Outfit', sans-serif;
       font-size: 0.88rem;
@@ -78,21 +77,99 @@
     }
     .nav-links a:hover { color: var(--cor-texto); }
 
-    /* ── BOTÃO DO MENU (CTA) ── */
     .nav-btn {
       font-family: 'Outfit', sans-serif;
       font-size: 0.85rem;
       font-weight: 600;
       padding: 0.55rem 1.4rem;
-      background: var(--cor-primaria);
-      color: #000;
+      background: rgba(0,191,255);
+      color: #fff;
       border-radius: 100px;
       transition: opacity 0.2s, transform 0.15s;
     }
     .nav-btn:hover { opacity: 0.85; transform: translateY(-1px); }
 
+    /* ── HAMBURGER ── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 200;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--cor-texto);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+      transform-origin: center;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; width: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── MENU MOBILE ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-height);
+      left: 0; right: 0;
+      background: rgba(13,13,13,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 1.5rem 5% 2rem;
+      z-index: 99;
+      flex-direction: column;
+      gap: 0;
+      transform: translateY(-10px);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .mobile-menu.open {
+      display: flex;
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .mobile-menu li {
+      list-style: none;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .mobile-menu li:last-child { border-bottom: none; }
+    .mobile-menu a {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--cor-suave);
+      display: block;
+      padding: 1rem 0;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--cor-texto); }
+    .mobile-menu .mobile-cta {
+      margin-top: 1.2rem;
+      display: inline-block;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.85rem 2rem;
+      background: var(--cor-primaria);
+      color: #000;
+      border-radius: 100px;
+      text-align: center;
+    }
+
     /* ============================================================
-       HERO — SEÇÃO COM VÍDEO
+       HERO — VÍDEO DE FUNDO
     ============================================================ */
     .hero {
       position: relative;
@@ -102,34 +179,33 @@
       justify-content: center;
       text-align: center;
       overflow: hidden;
+      /* nav é position:fixed — fica por cima sem precisar de padding-top */
     }
 
-    /* ── VÍDEO DE FUNDO ──
-         Coloque o caminho do seu vídeo no atributo src abaixo.
-         Formatos recomendados: .mp4 (H.264) para compatibilidade máxima.
-         Dica: adicione também um <source type="video/webm"> como fallback.
-    ── */
+    /* Vídeo cobre o hero inteiro — técnica center+scale para mobile retrato */
     .hero-video {
       position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: max(100%, calc(100vh * 16 / 9));
+      height: max(100%, calc(100vw * 9 / 16));
+      opacity: 0.30;
       object-fit: cover;
-      opacity: 0.30;            /* 0 = invisível · 1 = totalmente visível */
-      filter: saturate(0.6);    /* remova esta linha para manter as cores */
+      filter: saturate(0.6);
     }
 
-    /* Overlay gradiente sobre o vídeo */
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(to bottom,
-          rgba(13,13,13,0.15) 0%,
-          rgba(13,13,13,0.05) 45%,
-          rgba(13,13,13,0.80) 100%);
+      background: linear-gradient(
+        to bottom,
+        rgba(13,13,13,0.15) 0%,
+        rgba(13,13,13,0.05) 45%,
+        rgba(13,13,13,0.80) 100%
+      );
     }
 
-    /* Conteúdo do hero */
     .hero-content {
       position: relative;
       z-index: 2;
@@ -138,7 +214,6 @@
       animation: fadeUp 0.9s ease both;
     }
 
-    /* ── TAG ACIMA DO TÍTULO ── */
     .hero-tag {
       display: inline-block;
       font-family: 'Outfit', sans-serif;
@@ -146,18 +221,18 @@
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--cor-primaria);
-      background: rgba(184,255,90,0.1);
-      border: 1px solid rgba(184,255,90,0.25);
+      color: rgba(218,165,32);
+      background: rgba(70,130,180,0.1);
+      border: 1px solid rgba(70,130,180);
       padding: 0.35rem 1rem;
       border-radius: 100px;
       margin-bottom: 1.6rem;
       animation: fadeUp 0.9s 0.1s ease both;
     }
 
-    /* ── TÍTULO PRINCIPAL ── */
     .hero-title {
       font-family: 'Outfit', sans-serif;
+      color:rgba(0,191,255);
       font-weight: 900;
       font-size: clamp(2.8rem, 7vw, 5.5rem);
       line-height: 1.05;
@@ -165,19 +240,16 @@
       margin-bottom: 1.4rem;
       animation: fadeUp 0.9s 0.2s ease both;
     }
-    /* Palavra em destaque dentro do título */
     .hero-title .destaque { color: var(--cor-primaria); }
 
-    /* ── SUBTÍTULO / DESCRIÇÃO ── */
     .hero-desc {
-      font-size: 1.1rem;
-      color: var(--cor-suave);
+      font-size: 19px;
+      color:rgba(218,165,32);
       max-width: 540px;
       margin: 0 auto 2.4rem;
       animation: fadeUp 0.9s 0.3s ease both;
     }
 
-    /* ── BOTÕES DO HERO ── */
     .hero-btns {
       display: flex;
       gap: 1rem;
@@ -190,8 +262,8 @@
       font-weight: 700;
       font-size: 0.95rem;
       padding: 0.85rem 2.2rem;
-      background: var(--cor-primaria);
-      color: #000;
+      background: rgba(30,144,255);
+      color: #fff;
       border-radius: 100px;
       transition: transform 0.15s, opacity 0.2s;
     }
@@ -208,7 +280,6 @@
     }
     .btn-ghost:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
 
-    /* Indicador de scroll */
     .scroll-hint {
       position: absolute;
       bottom: 2rem;
@@ -243,7 +314,7 @@
       font-weight: 600;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--cor-primaria);
+      color: #fff;
       margin-bottom: 0.8rem;
     }
     .section-title {
@@ -262,7 +333,7 @@
     }
 
     /* ============================================================
-       SEÇÃO SOBRE / TEXTO + IMAGEM
+       SOBRE
     ============================================================ */
     #sobre { background: #111116; }
 
@@ -274,8 +345,6 @@
       max-width: 1100px;
       margin: 0 auto;
     }
-
-    /* ── IMAGEM DO SOBRE: troque o src ── */
     .sobre-img {
       border-radius: var(--raio);
       width: 100%;
@@ -283,17 +352,15 @@
       object-fit: cover;
       opacity: 0.85;
     }
-
-    /* Parágrafo do sobre */
     .sobre-texto p {
-      color: var(--cor-suave);
+      color:#fff;
       margin-bottom: 1.2rem;
       font-size: 1rem;
     }
     .sobre-texto p:last-child { margin-bottom: 0; }
 
     /* ============================================================
-       SEÇÃO CARDS (features / tópicos)
+       CARDS
     ============================================================ */
     #cards { background: var(--cor-fundo); }
 
@@ -320,34 +387,21 @@
       transform: translateY(-4px);
       border-color: rgba(184,255,90,0.3);
     }
-
-    /* ── ÍCONE DO CARD: troque o emoji ou SVG ── */
-    .card-icon {
-      font-size: 2rem;
-      margin-bottom: 1.1rem;
-      display: block;
-    }
-    /* ── TÍTULO DO CARD ── */
+    .card-icon { font-size: 2rem; margin-bottom: 1.1rem; display: block; }
     .card-title {
       font-family: 'Outfit', sans-serif;
       font-weight: 700;
       font-size: 1.08rem;
       margin-bottom: 0.6rem;
+      color:#fff;
     }
-    /* ── TEXTO DO CARD ── */
-    .card-text {
-      font-size: 0.9rem;
-      color: var(--cor-suave);
-      line-height: 1.7;
-    }
+    .card-text { font-size: 0.9rem; color: #fff; line-height: 1.7; }
 
     /* ============================================================
-       SEÇÃO DEPOIMENTOS / CITAÇÕES
+       DEPOIMENTOS
     ============================================================ */
-    #depoimentos {
-      background: #111116;
-      text-align: center;
-    }
+    #depoimentos { background: #111116; text-align: center; }
+
     .dep-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -362,7 +416,6 @@
       padding: 2rem;
       text-align: left;
     }
-    /* ── CITAÇÃO ── */
     .dep-quote {
       font-size: 1rem;
       color: var(--cor-texto);
@@ -372,25 +425,14 @@
     }
     .dep-quote::before { content: '"'; color: var(--cor-primaria); font-size: 1.4rem; }
     .dep-quote::after  { content: '"'; color: var(--cor-primaria); font-size: 1.4rem; }
-    /* ── NOME / CARGO ── */
-    .dep-name {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
+    .dep-name { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.9rem; }
     .dep-role { font-size: 0.8rem; color: var(--cor-suave); margin-top: 0.2rem; }
 
     /* ============================================================
-       SEÇÃO CTA FINAL
+       CTA FINAL
     ============================================================ */
-    #cta {
-      background: var(--cor-fundo);
-      text-align: center;
-    }
-    .cta-box {
-      max-width: 640px;
-      margin: 0 auto;
-    }
+    #cta { background: var(--cor-fundo); text-align: center; }
+    .cta-box { max-width: 640px; margin: 0 auto; }
     .cta-box .section-title { margin-bottom: 1rem; }
     .cta-box .section-desc  { margin: 0 auto 2.4rem; }
 
@@ -407,273 +449,247 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-    /* ── TEXTO DO RODAPÉ ── */
-    .footer-copy {
-      font-size: 0.82rem;
-      color: var(--cor-suave);
-    }
-    .footer-links {
-      display: flex;
-      gap: 1.8rem;
-      list-style: none;
-    }
-    .footer-links a {
-      font-size: 0.82rem;
-      color: var(--cor-suave);
-      transition: color 0.2s;
-    }
+    .footer-copy { font-size: 0.82rem; color: var(--cor-suave); }
+    .footer-links { display: flex; gap: 1.8rem; list-style: none; }
+    .footer-links a { font-size: 0.82rem; color: var(--cor-suave); transition: color 0.2s; }
     .footer-links a:hover { color: var(--cor-texto); }
 
     /* ============================================================
-       ANIMAÇÕES DE ENTRADA AO SCROLL
+       ANIMAÇÕES
     ============================================================ */
     .reveal {
       opacity: 0;
       transform: translateY(28px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ============================================================
-       RESPONSIVO MOBILE
+       RESPONSIVO
     ============================================================ */
-    @media (max-width: 768px) {
+   @media (max-width: 768px) {
+   .sobre-texto p{
+   font-size:12px;
+   }
+   }
+   @media (max-width: 768px) {
       .nav-links, .nav-btn { display: none; }
+      .nav-toggle { display: flex; }
 
-      .sobre-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      footer {
-        flex-direction: column;
-        text-align: center;
-      }
+      .hero { min-height: 100svh; }
+      .hero-title { font-size: 1.7rem; line-height: 1.0; }
+      .hero-desc  { font-size: 0.7rem; }
+      .hero-btns  { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-ghost { width: 100%; max-width: 260px; text-align: center; }
+
+      .sobre-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .sobre-img  { aspect-ratio: 16/10; }
+
+      .cards-grid, .dep-grid { grid-template-columns: 1fr; }
+
+      section { padding: 4rem 4%; }
+
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; flex-wrap: wrap; gap: 1rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title    { font-size: 1.8rem; }
+      .section-title { font-size: 1.6rem; }
+      .card, .dep-card { padding: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════════════════════════
-       NAVEGAÇÃO
-       Edite: logo, links do menu, texto do botão
-  ══════════════════════════════════════════════════════════ -->
+  <!-- NAVEGAÇÃO -->
   <nav>
-    <span class="nav-logo">✦ Logo Aqui</span>  <!-- EDITE: nome/logo -->
+    <span class="nav-logo">
+      <img src="https://i.ibb.co/Y4XXw4Vq/Chat-GPT-Image-21-de-mar-de-2026-07-59-17.png" alt="Logo">
+    </span>
 
     <ul class="nav-links">
-      <li><a href="#sobre">Sobre</a></li>       <!-- EDITE: link 1 -->
-      <li><a href="#cards">Tópicos</a></li>     <!-- EDITE: link 2 -->
-      <li><a href="#depoimentos">Vozes</a></li> <!-- EDITE: link 3 -->
-      <li><a href="#cta">Contato</a></li>       <!-- EDITE: link 4 -->
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#cards">Tópicos</a></li>
+      <li><a href="#depoimentos">Vozes</a></li>
+      <li><a href="#cta">Contato</a></li>
     </ul>
 
-    <a href="#cta" class="nav-btn">Participar</a> <!-- EDITE: CTA do menu -->
+    <a href="#cta" class="nav-btn">Participar</a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
+  <!-- MENU MOBILE -->
+  <ul class="mobile-menu" id="mobileMenu">
+    <li><a href="#sobre"       onclick="closeMenu()">Sobre</a></li>
+    <li><a href="#cards"       onclick="closeMenu()">Tópicos</a></li>
+    <li><a href="#depoimentos" onclick="closeMenu()">Vozes</a></li>
+    <li><a href="#cta"         onclick="closeMenu()">Contato</a></li>
+    <li><a href="#cta" class="mobile-cta" onclick="closeMenu()">Participar</a></li>
+  </ul>
 
-  <!-- ══════════════════════════════════════════════════════════
-       HERO — VÍDEO DE FUNDO
-       ► Coloque o caminho do seu vídeo em src=""
-       ► Recomendado: .mp4 / H.264 para todos os navegadores
-  ══════════════════════════════════════════════════════════ -->
+
+  <!-- HERO -->
   <section class="hero">
-
-    <!-- ▼ VÍDEO: troque "SEU_VIDEO.mp4" pelo arquivo real ▼ -->
     <video class="hero-video" autoplay muted loop playsinline>
       <source src="genz.mp4" type="video/mp4" />
-      <!-- fallback opcional: <source src="SEU_VIDEO.webm" type="video/webm" /> -->
     </video>
 
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
-      <!-- ── TAG acima do título ── -->
-      <span class="hero-tag">✦ Escreva uma tag curta aqui</span>
-
-      <!-- ── TÍTULO PRINCIPAL ── -->
+      <span class="hero-tag">#Geração Z</span>
       <h1 class="hero-title">
-        Seu título <span class="destaque">impactante</span><br>vai aqui
+        Geração Z <br> Brasil
       </h1>
-
-      <!-- ── SUBTÍTULO / DESCRIÇÃO ── -->
       <p class="hero-desc">
-        Escreva aqui uma descrição curta e chamativa do seu site, projeto ou comunidade. Duas ou três linhas são suficientes.
+       Nós da Geração Z
+Não estamos interessados em partidos ou narrativas, não vamos mais suportar esse esculacho que é as nossas vidas.
+<br>
+E por que?
+Porque nenhum ser humano merece pagar pelos erros dos antepassados, ou acordamos pra realidade a nossa volta de uma vez por todas ou o BRASIL não vai melhorar nunca.
       </p>
-
-      <!-- ── BOTÕES ── -->
       <div class="hero-btns">
-        <a href="#sobre" class="btn-primary">Explorar ↓</a>       <!-- EDITE -->
-        <a href="#cta"   class="btn-ghost">Saiba mais</a>         <!-- EDITE -->
+        <a href="#sobre" class="btn-primary">Explorar ↓</a>
+        <a href="#cta"   class="btn-ghost">Saiba mais</a>
       </div>
     </div>
 
-    <!-- Indicador de scroll -->
     <div class="scroll-hint">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
       <span>Role</span>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════════════════════
-       SOBRE — texto + imagem
-  ══════════════════════════════════════════════════════════ -->
+  <!-- SOBRE -->
   <section id="sobre">
     <div class="sobre-grid">
-
-      <!-- ── IMAGEM: troque o src ── -->
       <img
         class="sobre-img reveal"
-        src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80"
+        src="https://i.ibb.co/bjS2J1cf/1f44a659-f35a-4a1d-9072-9e5c3315efa0.png"
         alt="Descrição da imagem"
       />
-      <!-- ↑ Troque a URL acima por uma imagem local ou da sua escolha -->
-
       <div class="sobre-texto reveal">
-        <p class="section-label">Sobre</p>  <!-- EDITE: rótulo da seção -->
-        <h2 class="section-title">Escreva o<br>título da seção</h2>
+        <p style="color=#fff;" class="section-label">🚨⚠️Vamos ser sinceros⚠️🚨</p>
+        <p>Ninguém aqui quer estar perdendo tempo.
+Ninguém quer estar aqui tentando mostrar a realidade de um país afundado em corrupção, injustiça e um sistema podre que só oprime quem trabalha.
 
-        <!-- ── PARÁGRAFOS DE TEXTO ── -->
-        <p>
-          Escreva aqui o primeiro parágrafo desta seção. Conte a história, o propósito ou o contexto do seu projeto de forma autêntica e direta.
-        </p>
-        <p>
-          Este é o segundo parágrafo. Você pode adicionar ou remover blocos &lt;p&gt; conforme precisar. Mantenha o texto conciso e relevante.
-        </p>
-        <p>
-          Terceiro parágrafo opcional. Use para complementar ou reforçar a mensagem principal.
-        </p>
+Mas a realidade é essa. A maioria finge não ver, se esconde no "jeitinho brasileiro", na ilusão de que está tudo bem. E o povo... ainda espera um salvador.
+
+A grande verdade é essa, você tem o direito de apoiar quem quiser, mas defender sem questionar, passar pano, isso é ser torcedor de político, não cidadão.
+
+Político é para SERVIR o povo, não para se servir dele. Nossa indignação não é um ato de rebeldia passageira. Nossa luta é pelo despertar de um povo cansado de ser manipulado.
+Cansado de ver impunidade enquanto paga a conta de quem deveria zelar pelo povo.
+
+Estamos no limite. O grito de justiça está por um fio, e ele vai ecoar nos quatro cantos desse país.
+
+E todos vão ver: o verdadeiro gigante não é político, é o povo unido.
+Vamos quebrar esse sistema podre. 
+
+Chegou a hora de nos levantarmos!</p>
       </div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════════════════════
-       CARDS — tópicos / features / pilares
-       Adicione ou remova <div class="card"> conforme precisar
-  ══════════════════════════════════════════════════════════ -->
+  <!-- CARDS -->
   <section id="cards">
     <div class="cards-header reveal">
-      <p class="section-label">Tópicos</p>  <!-- EDITE -->
-      <h2 class="section-title">O que você encontra aqui</h2>  <!-- EDITE -->
+      <p class="section-label">Tópicos</p>
+      <h2 class="section-title">O que você encontra aqui</h2>
       <p class="section-desc">Descrição opcional desta seção em uma ou duas linhas.</p>
     </div>
-
     <div class="cards-grid">
-
-      <!-- CARD 1 -->
       <div class="card reveal">
-        <span class="card-icon">⚡</span>                   <!-- EDITE: emoji ou ícone -->
-        <h3 class="card-title">Título do card 1</h3>        <!-- EDITE -->
-        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p> <!-- EDITE -->
+        <span class="card-icon">⚡</span>
+        <h3 class="card-title">Título do card 1</h3>
+        <p class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
       </div>
-
-      <!-- CARD 2 -->
       <div class="card reveal">
         <span class="card-icon">🎯</span>
         <h3 class="card-title">Título do card 2</h3>
-        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
+        <p class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
       </div>
-
-      <!-- CARD 3 -->
       <div class="card reveal">
         <span class="card-icon">🌐</span>
         <h3 class="card-title">Título do card 3</h3>
-        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
+        <p class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
       </div>
-
-      <!-- CARD 4 -->
       <div class="card reveal">
         <span class="card-icon">💬</span>
         <h3 class="card-title">Título do card 4</h3>
-        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
+        <p class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
       </div>
-
-      <!-- CARD 5 -->
       <div class="card reveal">
         <span class="card-icon">🔥</span>
         <h3 class="card-title">Título do card 5</h3>
-        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
+        <p class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
       </div>
-
-      <!-- CARD 6 -->
       <div class="card reveal">
         <span class="card-icon">✨</span>
         <h3 class="card-title">Título do card 6</h3>
-        <p  class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
+        <p class="card-text">Texto explicativo curto sobre este tópico ou feature. Duas ou três linhas funcionam melhor.</p>
       </div>
-
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════════════════════
-       DEPOIMENTOS / CITAÇÕES
-       Adicione ou remova <div class="dep-card"> conforme precisar
-  ══════════════════════════════════════════════════════════ -->
+  <!-- DEPOIMENTOS -->
   <section id="depoimentos">
-    <p class="section-label reveal">Vozes</p>      <!-- EDITE: rótulo -->
-    <h2 class="section-title reveal">O que estão dizendo</h2> <!-- EDITE -->
-
+    <p class="section-label reveal">Vozes</p>
+    <h2 class="section-title reveal">O que estão dizendo</h2>
     <div class="dep-grid">
-
-      <!-- DEPOIMENTO 1 -->
       <div class="dep-card reveal">
         <p class="dep-quote">Escreva aqui a citação ou depoimento da pessoa. Mantenha curto e impactante.</p>
-        <p class="dep-name">Nome da Pessoa</p>       <!-- EDITE -->
-        <p class="dep-role">Cargo / Descrição</p>   <!-- EDITE -->
+        <p class="dep-name">Nome da Pessoa</p>
+        <p class="dep-role">Cargo / Descrição</p>
       </div>
-
-      <!-- DEPOIMENTO 2 -->
       <div class="dep-card reveal">
         <p class="dep-quote">Segunda citação ou depoimento aqui. Pode ser de outro colaborador, usuário ou parceiro.</p>
         <p class="dep-name">Nome da Pessoa</p>
         <p class="dep-role">Cargo / Descrição</p>
       </div>
-
-      <!-- DEPOIMENTO 3 -->
       <div class="dep-card reveal">
         <p class="dep-quote">Terceira citação aqui. Autenticidade é o que conecta — use palavras reais de pessoas reais.</p>
         <p class="dep-name">Nome da Pessoa</p>
         <p class="dep-role">Cargo / Descrição</p>
       </div>
-
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════════════════════
-       CTA FINAL — chamada para ação
-  ══════════════════════════════════════════════════════════ -->
+  <!-- CTA -->
   <section id="cta">
     <div class="cta-box">
-      <p class="section-label reveal">Próximo passo</p>   <!-- EDITE -->
-      <h2 class="section-title reveal">Pronto para<br><span style="color:var(--cor-primaria)">começar?</span></h2> <!-- EDITE -->
+      <p class="section-label reveal">Próximo passo</p>
+      <h2 class="section-title reveal">Pronto para<br><span style="color:var(--cor-primaria)">começar?</span></h2>
       <p class="section-desc reveal">Escreva aqui uma última frase motivacional ou o próximo passo que você quer que o usuário tome.</p>
-
       <div class="hero-btns reveal">
-        <a href="mailto:seuemail@email.com" class="btn-primary">Entrar em contato</a> <!-- EDITE: href com seu e-mail ou link -->
+        <a href="mailto:seuemail@email.com" class="btn-primary">Entrar em contato</a>
         <a href="#sobre" class="btn-ghost">Voltar ao topo ↑</a>
       </div>
     </div>
   </section>
 
 
-  <!-- ══════════════════════════════════════════════════════════
-       RODAPÉ
-  ══════════════════════════════════════════════════════════ -->
+  <!-- RODAPÉ -->
   <footer>
-    <p class="footer-copy">© 2025 · Nome do Projeto · Feito com 💚</p> <!-- EDITE -->
-
+    <p class="footer-copy">© Geração Z Cada click e ideia de você ajudou a construir o site</p>
     <ul class="footer-links">
-      <li><a href="#">Instagram</a></li>   <!-- EDITE: links das redes -->
+      <li><a href="#">Instagram</a></li>
       <li><a href="#">TikTok</a></li>
       <li><a href="#">Discord</a></li>
       <li><a href="#">Privacidade</a></li>
@@ -681,10 +697,8 @@
   </footer>
 
 
-  <!-- ══════════════════════════════════════════════════════════
-       JAVASCRIPT — scroll reveal (não precisa editar)
-  ══════════════════════════════════════════════════════════ -->
   <script>
+    /* ── Scroll Reveal ── */
     const revealEls = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
@@ -695,7 +709,32 @@
       });
     }, { threshold: 0.12 });
     revealEls.forEach(el => io.observe(el));
+
+    /* ── Hamburger Menu ── */
+    const toggle     = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    toggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      toggle.classList.toggle('open');
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      toggle.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+        closeMenu();
+      }
+    });
   </script>
 
+</body>
+</html>
 </body>
 </html>
